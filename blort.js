@@ -1,12 +1,18 @@
 import { Runtime, Inspector } from "./node_modules/@observablehq/runtime/dist/runtime.js";
 
-const defaultRuntime = new Runtime()
-const defaultObserver = Inspector.into(document.body)
 
 export function createModule(params) {
+  const defaultRuntime = new Runtime()
+  const defaultObserver = name => {
+    const el = document.querySelector(`#blort-var-${name}`)
+    if (el == null) return
+
+    return new Inspector(el)
+  }
+
   params = Object.assign({}, params, {
-    runtime: new Runtime(),
-    observer: Inspector.into(document.body),
+    runtime: defaultRuntime,
+    observer: defaultObserver,
   })
   const { runtime, observer } = params
   return new Module({ runtime, observer })
@@ -14,9 +20,9 @@ export function createModule(params) {
 
 class Module {
   constructor ({ runtime, observer}) {
-    this._runtime = runtime || defaultRuntime
-    this._observer = observer || defaultObserver
-    this._module = runtime.module(observer)
+    this._runtime = runtime
+    this._observer = observer
+    this._module = runtime.module(() => {}, observer)
   }
 
   addVariable (fn) {
@@ -30,7 +36,7 @@ class Module {
 
   addViewOf (fn) {
     const fnName = fn.name
-    const viewName = `viewof ${fnName}`
+    const viewName = `${fnName}View`
     const params = getFnParams(fn)
     const viewVariable = this._module.variable(this._observer(viewName))
     viewVariable.define(viewName, params, fn)
@@ -39,6 +45,24 @@ class Module {
 
     fnVariable.define(fnName, ['Generators', viewName], (Generators, viewVariable) => 
       Generators.input(viewVariable)
+    )
+  }
+
+  addMutable (name, initialValue) {
+    const mutableName = `${name}Mutable`
+
+    const mutableVariable = this._module.variable(this._observer(mutableName))
+    mutableVariable.define(
+      mutableName,
+      ['Mutable'],
+      Mutable => new Mutable(initialValue)
+    )
+
+    const fnVariable = this._module.variable(this._observer(name))
+    fnVariable.define(
+      name, 
+      [mutableName],
+      mutable => mutable.generator
     )
   }
 }

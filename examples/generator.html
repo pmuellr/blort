@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<link rel="stylesheet" type="text/css" href="../node_modules/@observablehq/inspector/dist/inspector.css">
+<script type="module" src="../blort.js"></script>
+<body>
+<div id=blort-var-text></div>
+<div>
+  <span id=blort-var-pausedView></span>
+  <label for=paused>paused</label>
+</div>
+<div id=blort-var-counter></div>
+  
+<script type="module">
+import { createModule  } from "../blort.js";
+
+const module = createModule()
+
+module.addVariable(function text(md) {
+  return md`
+# generator.html
+
+Clone of the
+[Pause a Generator](https://observablehq.com/@mbostock/pause-a-generator)
+Notebook.
+`
+})
+
+module.addViewOf(function paused(html) {
+  return html`<input id=paused type=checkbox>`
+})
+
+module.addVariable(function *counter(paused) {
+  let counter = this | 0
+  if (paused) return yield counter
+
+  while (true) {
+    yield ++counter
+  }
+})
+</script>

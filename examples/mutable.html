@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<link rel="stylesheet" type="text/css" href="../node_modules/@observablehq/inspector/dist/inspector.css">
+<script type="module" src="../blort.js"></script>
+<body>
+
+<div id=blort-var-text></div>
+<div id=blort-var-counter></div>
+<div id=blort-var-counterEven></div>
+<div id=blort-var-counterFives></div>
+  
+<script type="module">
+import { createModule  } from "../blort.js";
+
+const module = createModule()
+
+module.addVariable(function text(md) {
+  return md`
+# mutable.html
+
+Shows an example from the
+[Introduction to Mutable State](https://observablehq.com/@observablehq/introduction-to-mutable-state)
+Notebook.
+`
+})
+
+module.addMutable('counterEven', 0)
+module.addMutable('counterFives', 0)
+
+module.addVariable(function *counter(counterEvenMutable, counterFivesMutable, Promises) {
+  let i = 0;
+  while (true) {
+    if (i % 2 === 0) counterEvenMutable.value = i;
+    if (i % 5 === 0) counterFivesMutable.value = i;
+    yield Promises.delay(1000, ++i);
+  }  
+})
+</script>
