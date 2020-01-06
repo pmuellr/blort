@@ -1,0 +1,38 @@
+{
+  "name": "blort",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Basic Library for the Observable RunTime",
+  "license": "MIT",
+  "author": "Patrick Mueller <pmuellr@apache.org> (https://github.com/pmuellr)",
+  "homepage": "https://github.com/pmuellr/blort",
+  "bin": {
+    "blort": "blort.js"
+  },
+  "scripts": {
+    "standard": "standard --verbose",
+    "test": "npm run -s standard",
+    "watch": "nodemon --exec 'npm run -s test'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pmuellr/blort.git"
+  },
+  "bugs": {
+    "url": "https://github.com/pmuellr/blort/issues"
+  },
+  "standard": {
+    "ignore": [
+      "tmp/**/*",
+      "docs/**/*"
+    ]
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.2",
+    "standard": "^14.3.1"
+  },
+  "dependencies": {
+    "@observablehq/inspector": "^3.2.1",
+    "@observablehq/runtime": "^4.6.4"
+  }
+}
