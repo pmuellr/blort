@@ -1,7 +1,4 @@
-import { Runtime, Inspector } from "./node_modules/@observablehq/runtime/dist/runtime.js";
-
-
-export function createModule(params) {
+export function createModule({ Runtime, Inspector }, params) {
   const defaultRuntime = new Runtime()
   const defaultObserver = name => {
     const el = document.querySelector(`#blort-var-${name}`)

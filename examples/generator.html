@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
 <link rel="stylesheet" type="text/css" href="../node_modules/@observablehq/inspector/dist/inspector.css">
-<script type="module" src="../blort.js"></script>
 <body>
+
 <div id=blort-var-text></div>
 <div>
   <span id=blort-var-pausedView></span>
@@ -11,7 +11,7 @@
 <div id=blort-var-counter></div>
   
 <script type="module">
-import { createModule  } from "../blort.js";
+import { createModule  } from "../blort-cdn.js";
 
 const module = createModule()
 
