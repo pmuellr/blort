@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8">
+  <link rel="icon" href="../images/blort-1024x1024.png">
+  <link rel="stylesheet" type="text/css" href="../node_modules/@observablehq/inspector/dist/inspector.css">
+</head>
+<body>
+
+<div id=blort-var-title></div>
+<div id=blort-var-sandwichesView></div>
+<div id=blort-var-sandwiches></div>
+<div id=blort-var-total></div>
+  
+<script type="module">
+import { createModule  } from "../blort-cdn.js";
+
+const module = createModule()
+
+module.addVariable(function title(md) {
+  return md`
+# Tutorial 1: Lunch calculator
+
+Clone of the
+[Tutorial 1: Lunch calculator](https://observablehq.com/@observablehq/tutorial?collection=@observablehq/tutorial)
+Notebook.
+`})
+
+module.addVariable(function total(sandwiches) {
+  const price = sandwiches < 50 ? 5 : 4.5
+  return `$${sandwiches * price}`
+})
+
+module.addViewOf(function sandwiches(html) {
+  return html`<input type=range>`
+})
+
+</script>

@@ -1,17 +1,3 @@
-<!DOCTYPE html>
-<head>
-  <meta charset="utf-8">
-  <link rel="icon" href="../images/blort-1024x1024.png">
-  <link rel="stylesheet" type="text/css" href="../node_modules/@observablehq/inspector/dist/inspector.css">
-</head>
-<body>
-
-<div id=blort-var-text></div>
-<div id=blort-var-radiusView></div>
-<div id=blort-var-radius></div>
-<div id=blort-var-graphic></div>
-
-<script type="module">
 import { createModule  } from "../blort-cdn.js";
 
 // create a new module
@@ -41,4 +27,3 @@ module.addVariable(function graphic(html, radius) {
     </svg>
   `
 })
-</script>
